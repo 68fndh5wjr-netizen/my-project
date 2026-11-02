@@ -4,5 +4,18 @@
   "createdAt": "2026-11-02T20:05:47.311Z",
   "filename": "85dfa9ff-3734-475b-880b-b64c89682670.json",
   "geminiStarted": false,
-  "messages": []
+  "messages": [
+    {
+      "id": "ea3b76f0-63f0-459f-972a-1010ecd4d26c",
+      "role": "user",
+      "content": "I attached images: .antigravity/uploads/photo-1793649919-1.jpg, .antigravity/uploads/photo-1793649919-2.jpg.\n\n4/0AUn6Hd85KFg7O6SnSM2bIfeL-Rd3f0ge5yLuvTxj3fmErnjX0X6ltB7a0CqHueujut2qsQ",
+      "status": "pending",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": null,
+      "created_at": "2026-11-02T20:09:24.099Z",
+      "sender": "ios",
+      "is_cancelled": false
+    }
+  ]
 }

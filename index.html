@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Cumpleaños Esequiel . 18</title>
   <meta name="description" content="Invitación oficial a los 18 de Esequiel en Montevideo. ¿Venís?">
-  <meta name="theme-color" content="#080808">
+  <meta name="theme-color" content="#ff1b36">
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website">
@@ -21,7 +21,63 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Container for dynamically spawned stickers -->
+  <!-- Background Music: Right Round by Flo Rida -->
+  <audio id="bgMusic" preload="auto" loop playsinline>
+    <source src="assets/right-round.m4a" type="audio/mp4">
+    <source src="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/fe/3b/d0/fe3bd092-9d8e-9051-7fe1-b16c6acd221d/mzaf_8166976603338902638.plus.aac.p.m4a" type="audio/mp4">
+  </audio>
+
+  <!-- INTERACTIVE TIKTOK-STYLE INTRO OVERLAY (Matching photo 3 & 4) -->
+  <div id="introOverlay" class="intro-overlay active">
+    <!-- Initial Tap to Start Screen -->
+    <div id="introStartScreen" class="intro-start-screen">
+      <div class="intro-badge">🔞 CUMPLEAÑOS ESEQUIEL</div>
+      <h1 class="intro-main-title">MIS 18 AÑOS</h1>
+      <p class="intro-sub">María Orticochea 4183 • Montevideo</p>
+
+      <button id="btnStartIntro" class="btn-start-intro">
+        <span class="btn-icon-pulse">🔊</span>
+        <span class="btn-text-main">TOCÁ PARA ENTRAR</span>
+        <span class="btn-text-sub">Música: Right Round 🎵</span>
+      </button>
+    </div>
+
+    <!-- Animated Intercalating Slides -->
+    <div id="introSequence" class="intro-sequence" style="display: none;">
+      <!-- Slide 1: Red background, black HOLA (photo 3) -->
+      <div class="intro-slide slide-red" id="slide1">
+        <div class="slide-content">
+          <h1 class="slide-text black-text">HOLA</h1>
+        </div>
+      </div>
+
+      <!-- Slide 2: Black background, red CUMPLO 18 AÑOS (photo 4) -->
+      <div class="intro-slide slide-black" id="slide2" style="display: none;">
+        <div class="slide-content">
+          <h1 class="slide-text red-text">CUMPLO<br>18 AÑOS</h1>
+        </div>
+      </div>
+
+      <!-- Slide 3: Red background, black/white ¿VENÍS? -->
+      <div class="intro-slide slide-red" id="slide3" style="display: none;">
+        <div class="slide-content">
+          <h1 class="slide-text black-text">¿VENÍS?</h1>
+        </div>
+      </div>
+
+      <!-- Slide 4: Black background, sticker tease & ENTONCES... -->
+      <div class="intro-slide slide-black" id="slide4" style="display: none;">
+        <div class="slide-content">
+          <img src="assets/sticker-happy.jpg" alt="Esequiel" class="intro-kid-sticker">
+          <h1 class="slide-text red-text">ENTONCES...</h1>
+        </div>
+      </div>
+
+      <button id="btnSkipIntro" class="btn-skip-intro">Saltar intro &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Dynamic Stickers Container (Esequiel's kid face angry & happy) -->
   <div id="stickersContainer" class="stickers-container"></div>
 
   <!-- Top Navigation & Controls -->
@@ -31,9 +87,12 @@
       <span class="brand-text">ESEQUIEL . 18</span>
     </div>
     <div class="nav-actions">
+      <button id="replayIntroBtn" class="replay-btn" title="Ver intro interactiva de nuevo">
+        🎬 INTRO
+      </button>
       <button id="soundToggle" class="sound-btn" aria-label="Activar / Desactivar Sonido">
         <span class="sound-icon" id="soundIcon">🔇</span>
-        <span class="sound-label">MÚSICA</span>
+        <span class="sound-label" id="soundLabel">RIGHT ROUND</span>
       </button>
       <button id="editConfigBtn" class="edit-btn" title="Personalizar datos de la fiesta">
         ⚙️
@@ -43,7 +102,7 @@
 
   <main class="page-container">
 
-    <!-- HERO SECTION (Esequiel's Photo Card - Tap it for a surprise!) -->
+    <!-- HERO SECTION (Esequiel's Photo Card - Tap for Angry Sticker!) -->
     <section class="hero-section" id="hero">
       <div class="hero-card" id="heroCard">
         <div class="hero-image-wrapper">
@@ -69,7 +128,7 @@
       </div>
     </section>
 
-    <!-- THE "¿VENÍS?" MEME / INTERACTIVE QUESTION SECTION -->
+    <!-- THE "¿VENÍS?" MEME / INTERACTIVE QUESTION SECTION (photo 2) -->
     <section class="question-section" id="question-card">
       <div class="meme-card-frame">
         <div class="meme-card">
@@ -242,7 +301,7 @@
         </div>
       </div>
 
-      <!-- RSVP FORM (Sin las bebidas, enfocado en nombre, canción y dedicatoria) -->
+      <!-- RSVP FORM (Sin las bebidas) -->
       <div class="rsvp-card">
         <div class="rsvp-header">
           <span class="rsvp-badge">CONFIRMACIÓN OBLIGATORIA</span>
@@ -360,9 +419,9 @@
   <div id="celebrationOverlay" class="celebration-overlay">
     <div class="celebration-card">
       <div class="celeb-sticker-preview">
-        <div class="sticker-badge happy-sticker-in-modal">
-          <span class="sticker-face">😎🎉</span>
-          <span class="sticker-text">¡VAMOOOO!</span>
+        <div class="happy-sticker-in-modal">
+          <img src="assets/sticker-happy.jpg" alt="Esequiel Feliz" class="celeb-kid-face">
+          <span class="sticker-text">¡VAMOOOO! 👅🎉</span>
         </div>
       </div>
       <h2 class="celeb-title">¡SABÍA QUE NO IBAS A FALLAR!</h2>

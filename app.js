@@ -1,6 +1,7 @@
 /**
  * CUMPLEAÑOS ESEQUIEL . 18
  * Official Interactive Web Invitation Logic - Montevideo Edition
+ * Music: Right Round (Flo Rida) | Stickers: Esequiel Kid Faces | Intro: TikTok Style
  */
 
 // ==========================================
@@ -15,7 +16,7 @@ const DEFAULT_CONFIG = {
   locationText: "María Orticochea 4183, Montevideo",
   mapsUrl: "https://maps.app.goo.gl/Xb3xjy4f4ADwYHi49?g_st=ic",
   spotifyUrl: "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
-  whatsappNumber: "", // Default empty: opens WhatsApp contact selector
+  whatsappNumber: "",
   dressCode: "Total Black / Streetwear",
   lineUp: "Cachengue • RKT • Trap"
 };
@@ -80,182 +81,315 @@ const HAPPY_PHRASES = [
 
 const NO_BTN_TEXTS = ["NO", "NO?", "¿POSTA?", "NO PODÉS", "IMPOSIBLE", "BUENO SÍ"];
 
+// Cached Transparent Sticker URLs
+let angryStickerUrl = 'assets/sticker-angry.jpg';
+let happyStickerUrl = 'assets/sticker-happy.jpg';
+
 // ==========================================
-// 2. WEB AUDIO SYNTHESIZER
+// 2. AUDIO & SYNTHESIZER ENGINE
 // ==========================================
-class SoundFX {
+class AudioManager {
   constructor() {
-    this.ctx = null;
-    this.isPlayingBeat = false;
-    this.beatInterval = null;
-    this.step = 0;
+    this.audioEl = document.getElementById('bgMusic');
+    this.isPlaying = false;
+    this.synthCtx = null;
   }
 
-  init() {
-    if (!this.ctx) {
+  initSynth() {
+    if (!this.synthCtx) {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) {
-        this.ctx = new AudioCtx();
-      }
+      if (AudioCtx) this.synthCtx = new AudioCtx();
     }
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+    if (this.synthCtx && this.synthCtx.state === 'suspended') {
+      this.synthCtx.resume();
+    }
+  }
+
+  playMusic() {
+    if (!this.audioEl) return;
+    this.audioEl.volume = 0.85;
+    const playPromise = this.audioEl.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          this.isPlaying = true;
+          this.updateUi(true);
+        })
+        .catch(err => {
+          console.log("Audio autoplay waiting for user interaction:", err);
+        });
+    }
+  }
+
+  pauseMusic() {
+    if (!this.audioEl) return;
+    this.audioEl.pause();
+    this.isPlaying = false;
+    this.updateUi(false);
+  }
+
+  toggleMusic() {
+    if (this.isPlaying) {
+      this.pauseMusic();
+    } else {
+      this.playMusic();
+    }
+  }
+
+  updateUi(playing) {
+    const btn = document.getElementById('soundToggle');
+    const icon = document.getElementById('soundIcon');
+    const label = document.getElementById('soundLabel');
+    if (!btn || !icon || !label) return;
+
+    if (playing) {
+      btn.classList.add('playing');
+      icon.textContent = '🔊';
+      label.textContent = 'RIGHT ROUND';
+    } else {
+      btn.classList.remove('playing');
+      icon.textContent = '🔇';
+      label.textContent = 'MÚSICA';
     }
   }
 
   playClick() {
-    this.init();
-    if (!this.ctx) return;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    this.initSynth();
+    if (!this.synthCtx) return;
+    const osc = this.synthCtx.createOscillator();
+    const gain = this.synthCtx.createGain();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(440, this.ctx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.05);
-    gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.06);
+    osc.frequency.setValueAtTime(440, this.synthCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(880, this.synthCtx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.15, this.synthCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.synthCtx.currentTime + 0.06);
     osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    gain.connect(this.synthCtx.destination);
     osc.start();
-    osc.stop(this.ctx.currentTime + 0.06);
+    osc.stop(this.synthCtx.currentTime + 0.06);
   }
 
   playAngry() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
+    this.initSynth();
+    if (!this.synthCtx) return;
+    const now = this.synthCtx.currentTime;
+    const osc = this.synthCtx.createOscillator();
+    const gain = this.synthCtx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(160, now);
-    osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
-    gain.gain.setValueAtTime(0.3, now);
+    osc.frequency.setValueAtTime(170, now);
+    osc.frequency.exponentialRampToValueAtTime(75, now + 0.16);
+    gain.gain.setValueAtTime(0.35, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
     osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    gain.connect(this.synthCtx.destination);
     osc.start(now);
     osc.stop(now + 0.18);
   }
 
   playHappy() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-    const notes = [440, 554.37, 659.25, 880]; // A4, C#5, E5, A5
+    this.initSynth();
+    if (!this.synthCtx) return;
+    const now = this.synthCtx.currentTime;
+    const notes = [440, 554.37, 659.25, 880];
     notes.forEach((freq, idx) => {
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
+      const osc = this.synthCtx.createOscillator();
+      const gain = this.synthCtx.createGain();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, now + idx * 0.05);
       gain.gain.setValueAtTime(0.18, now + idx * 0.05);
       gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.25);
       osc.connect(gain);
-      gain.connect(this.ctx.destination);
+      gain.connect(this.synthCtx.destination);
       osc.start(now + idx * 0.05);
       osc.stop(now + idx * 0.05 + 0.3);
     });
   }
 
   playCelebration() {
-    this.init();
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
+    this.initSynth();
+    if (!this.synthCtx) return;
+    const now = this.synthCtx.currentTime;
 
-    // Sub bass drop
-    const bass = this.ctx.createOscillator();
-    const bassGain = this.ctx.createGain();
+    const bass = this.synthCtx.createOscillator();
+    const bassGain = this.synthCtx.createGain();
     bass.type = 'sine';
     bass.frequency.setValueAtTime(190, now);
     bass.frequency.exponentialRampToValueAtTime(45, now + 0.7);
     bassGain.gain.setValueAtTime(0.4, now);
     bassGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
     bass.connect(bassGain);
-    bassGain.connect(this.ctx.destination);
+    bassGain.connect(this.synthCtx.destination);
     bass.start(now);
     bass.stop(now + 0.8);
 
-    // Fanfare chords
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, idx) => {
-      const noteOsc = this.ctx.createOscillator();
-      const noteGain = this.ctx.createGain();
+      const noteOsc = this.synthCtx.createOscillator();
+      const noteGain = this.synthCtx.createGain();
       noteOsc.type = 'sawtooth';
       noteOsc.frequency.setValueAtTime(freq, now + idx * 0.08);
       noteGain.gain.setValueAtTime(0.12, now + idx * 0.08);
       noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.4);
       noteOsc.connect(noteGain);
-      noteGain.connect(this.ctx.destination);
+      noteGain.connect(this.synthCtx.destination);
       noteOsc.start(now + idx * 0.08);
       noteOsc.stop(now + idx * 0.08 + 0.45);
     });
   }
-
-  togglePartyBeat(onStateChange) {
-    this.init();
-    if (this.isPlayingBeat) {
-      this.stopPartyBeat();
-      if (onStateChange) onStateChange(false);
-    } else {
-      this.startPartyBeat();
-      if (onStateChange) onStateChange(true);
-    }
-  }
-
-  startPartyBeat() {
-    if (!this.ctx) return;
-    this.isPlayingBeat = true;
-    const intervalMs = (60 / 128) * 1000 / 2;
-    this.step = 0;
-
-    this.beatInterval = setInterval(() => {
-      const now = this.ctx.currentTime;
-      if (this.step % 2 === 0) {
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.frequency.setValueAtTime(130, now);
-        osc.frequency.exponentialRampToValueAtTime(35, now + 0.12);
-        gain.gain.setValueAtTime(0.35, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.15);
-      } else {
-        const bufferSize = this.ctx.sampleRate * 0.04;
-        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = Math.random() * 2 - 1;
-        }
-        const noise = this.ctx.createBufferSource();
-        noise.buffer = buffer;
-        const filter = this.ctx.createBiquadFilter();
-        filter.type = 'highpass';
-        filter.frequency.setValueAtTime(7000, now);
-        const noiseGain = this.ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.08, now);
-        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-        noise.connect(filter);
-        filter.connect(noiseGain);
-        noiseGain.connect(this.ctx.destination);
-        noise.start(now);
-      }
-      this.step = (this.step + 1) % 16;
-    }, intervalMs);
-  }
-
-  stopPartyBeat() {
-    this.isPlayingBeat = false;
-    if (this.beatInterval) {
-      clearInterval(this.beatInterval);
-      this.beatInterval = null;
-    }
-  }
 }
 
-const sounds = new SoundFX();
+const audioMgr = new AudioManager();
 
 // ==========================================
-// 3. DYNAMIC STICKER ENGINE (Angry & Happy)
+// 3. TRANSPARENT STICKER PROCESSOR
+// Converts outer white corners to transparent PNG
+// ==========================================
+function processStickerTransparency(src, onDone) {
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = () => {
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imgData.data;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Flood fill from 4 corners
+      const visited = new Uint8Array(w * h);
+      const queue = [[0, 0], [w - 1, 0], [0, h - 1], [w - 1, h - 1]];
+      for (const [qx, qy] of queue) visited[qy * w + qx] = 1;
+
+      let head = 0;
+      while (head < queue.length) {
+        const [x, y] = queue[head++];
+        const idx = (y * w + x) * 4;
+        const r = data[idx];
+        const g = data[idx + 1];
+        const b = data[idx + 2];
+
+        if (r > 235 && g > 235 && b > 235) {
+          data[idx + 3] = 0; // Transparent
+          const nbrs = [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]];
+          for (const [nx, ny] of nbrs) {
+            if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+              const nIdx = ny * w + nx;
+              if (!visited[nIdx]) {
+                visited[nIdx] = 1;
+                queue.push([nx, ny]);
+              }
+            }
+          }
+        }
+      }
+      ctx.putImageData(imgData, 0, 0);
+      onDone(canvas.toDataURL('image/png'));
+    } catch (e) {
+      console.warn("Could not process sticker transparency, using original:", e);
+      onDone(src);
+    }
+  };
+  img.onerror = () => onDone(src);
+  img.src = src;
+}
+
+// Pre-process both stickers
+processStickerTransparency('assets/sticker-angry.jpg', url => {
+  angryStickerUrl = url;
+});
+processStickerTransparency('assets/sticker-happy.jpg', url => {
+  happyStickerUrl = url;
+  // Update celebration preview if rendered
+  const celebImg = document.querySelector('.celeb-kid-face');
+  if (celebImg) celebImg.src = url;
+  const introImg = document.querySelector('.intro-kid-sticker');
+  if (introImg) introImg.src = url;
+});
+
+// ==========================================
+// 4. INTERACTIVE TIKTOK INTRO (photo 3 & 4)
+// ==========================================
+let introTimeout = null;
+
+function setupIntroSequence() {
+  const overlay = document.getElementById('introOverlay');
+  const startScreen = document.getElementById('introStartScreen');
+  const seqContainer = document.getElementById('introSequence');
+  const btnStart = document.getElementById('btnStartIntro');
+  const btnSkip = document.getElementById('btnSkipIntro');
+  const btnReplay = document.getElementById('replayIntroBtn');
+
+  const s1 = document.getElementById('slide1');
+  const s2 = document.getElementById('slide2');
+  const s3 = document.getElementById('slide3');
+  const s4 = document.getElementById('slide4');
+
+  function runSequence() {
+    startScreen.style.display = 'none';
+    seqContainer.style.display = 'block';
+
+    // Slide 1: HOLA (Red background, photo 3)
+    s1.style.display = 'flex';
+    s2.style.display = 'none';
+    s3.style.display = 'none';
+    s4.style.display = 'none';
+
+    // Slide 2: CUMPLO 18 AÑOS (Black background, photo 4) after 850ms
+    introTimeout = setTimeout(() => {
+      s1.style.display = 'none';
+      s2.style.display = 'flex';
+
+      // Slide 3: ¿VENÍS? (Red background) after another 850ms
+      introTimeout = setTimeout(() => {
+        s2.style.display = 'none';
+        s3.style.display = 'flex';
+
+        // Slide 4: ENTONCES... with Kid Sticker after another 850ms
+        introTimeout = setTimeout(() => {
+          s3.style.display = 'none';
+          s4.style.display = 'flex';
+
+          // Finish intro after 900ms
+          introTimeout = setTimeout(() => {
+            endIntro();
+          }, 900);
+        }, 850);
+      }, 850);
+    }, 850);
+  }
+
+  function endIntro() {
+    clearTimeout(introTimeout);
+    overlay.classList.remove('active');
+    fireMassiveConfetti();
+  }
+
+  btnStart.addEventListener('click', () => {
+    audioMgr.playMusic();
+    runSequence();
+  });
+
+  btnSkip.addEventListener('click', () => {
+    audioMgr.playMusic();
+    endIntro();
+  });
+
+  btnReplay.addEventListener('click', () => {
+    clearTimeout(introTimeout);
+    overlay.classList.add('active');
+    startScreen.style.display = 'flex';
+    seqContainer.style.display = 'none';
+    audioMgr.playMusic();
+    runSequence();
+  });
+}
+
+// ==========================================
+// 5. DYNAMIC STICKER ENGINE (Esequiel's Face)
 // ==========================================
 let angryIndex = 0;
 let happyIndex = 0;
@@ -267,19 +401,19 @@ function spawnSticker(type, clientX, clientY, customPhrase) {
   const sticker = document.createElement('div');
   sticker.className = `pop-sticker ${type}`;
 
-  let emoji = '😡';
   let phrase = customPhrase;
+  let imgUrl = angryStickerUrl;
 
   if (type === 'angry') {
-    sounds.playAngry();
-    emoji = ['😡', '🤬', '😠', '😤'][Math.floor(Math.random() * 4)];
+    audioMgr.playAngry();
+    imgUrl = angryStickerUrl;
     if (!phrase) {
       phrase = ANGRY_PHRASES[angryIndex % ANGRY_PHRASES.length];
       angryIndex++;
     }
   } else {
-    sounds.playHappy();
-    emoji = ['😎', '🥳', '🔥', '🎉'][Math.floor(Math.random() * 4)];
+    audioMgr.playHappy();
+    imgUrl = happyStickerUrl;
     if (!phrase) {
       phrase = HAPPY_PHRASES[happyIndex % HAPPY_PHRASES.length];
       happyIndex++;
@@ -287,24 +421,21 @@ function spawnSticker(type, clientX, clientY, customPhrase) {
   }
 
   sticker.innerHTML = `
-    <span class="sticker-emoji">${emoji}</span>
+    <img src="${imgUrl}" alt="Esequiel" class="sticker-avatar">
     <span class="sticker-text">${escapeHtml(phrase)}</span>
   `;
 
-  // Position at click or viewport center if coordinates missing
   const posX = clientX ?? (window.innerWidth / 2);
   const posY = clientY ?? (window.innerHeight / 2);
 
-  // Slight random offset for organic sticker cluster
   const jitterX = (Math.random() - 0.5) * 30;
   const jitterY = (Math.random() - 0.5) * 30;
 
-  sticker.style.left = `${Math.max(80, Math.min(window.innerWidth - 80, posX + jitterX))}px`;
-  sticker.style.top = `${Math.max(60, Math.min(window.innerHeight - 60, posY + jitterY))}px`;
+  sticker.style.left = `${Math.max(90, Math.min(window.innerWidth - 90, posX + jitterX))}px`;
+  sticker.style.top = `${Math.max(70, Math.min(window.innerHeight - 70, posY + jitterY))}px`;
 
   container.appendChild(sticker);
 
-  // Remove element after animation
   setTimeout(() => {
     if (sticker.parentNode) {
       sticker.parentNode.removeChild(sticker);
@@ -312,13 +443,12 @@ function spawnSticker(type, clientX, clientY, customPhrase) {
   }, 1900);
 }
 
-// Setup photo tap easter egg (Esequiel's photo reacts with "¡¿Qué me tocás?!")
+// Tap hero photo for angry reaction
 function setupPhotoReaction() {
   const heroCard = document.getElementById('heroCard');
   if (!heroCard) return;
 
   const handlePhotoTap = (e) => {
-    // Avoid triggering when tapping the scroll down button
     if (e.target.closest('.btn-scroll-down')) return;
 
     let x = e.clientX;
@@ -334,10 +464,10 @@ function setupPhotoReaction() {
 }
 
 // ==========================================
-// 4. STORAGE & CONFIG MANAGER
+// 6. STORAGE & CONFIG MANAGER
 // ==========================================
 function getConfig() {
-  const saved = localStorage.getItem('ese18_config_v2');
+  const saved = localStorage.getItem('ese18_config_v3');
   if (saved) {
     try {
       return { ...DEFAULT_CONFIG, ...JSON.parse(saved) };
@@ -349,7 +479,7 @@ function getConfig() {
 }
 
 function saveConfig(cfg) {
-  localStorage.setItem('ese18_config_v2', JSON.stringify(cfg));
+  localStorage.setItem('ese18_config_v3', JSON.stringify(cfg));
   applyConfig(cfg);
 }
 
@@ -368,7 +498,6 @@ function applyConfig(cfg) {
     mapLink.style.display = 'none';
   }
 
-  // Spotify Link
   const spotifyBtn = document.getElementById('btnSpotifyOpen');
   if (spotifyBtn && cfg.spotifyUrl) {
     spotifyBtn.href = cfg.spotifyUrl;
@@ -376,7 +505,7 @@ function applyConfig(cfg) {
 }
 
 // ==========================================
-// 5. COUNTDOWN TIMER
+// 7. COUNTDOWN TIMER
 // ==========================================
 let countdownTimer = null;
 
@@ -422,7 +551,7 @@ function startCountdown() {
 }
 
 // ==========================================
-// 6. THE VIRAL EVASIVE "NO" BUTTON & ANGRY STICKER
+// 8. THE VIRAL EVASIVE "NO" BUTTON & ANGRY STICKER
 // ==========================================
 let noAttempts = 0;
 let jokeTimeout = null;
@@ -448,12 +577,11 @@ function setupEvasiveNoButton() {
       e.stopPropagation();
     }
 
-    // Spawn the requested ANGRY STICKER: "¿Qué me tocás?" 😡
+    // Spawn Esequiel's Angry Face Sticker
     spawnSticker('angry', clientX, clientY, '¡¿QUÉ ME TOCÁS?! 😡');
 
     noAttempts++;
 
-    // Joke toast
     const joke = NO_JOKES[noAttempts % NO_JOKES.length];
     toast.textContent = joke;
     toast.classList.add('show');
@@ -462,11 +590,9 @@ function setupEvasiveNoButton() {
       toast.classList.remove('show');
     }, 1800);
 
-    // Update label
     const labelIdx = Math.min(noAttempts, NO_BTN_TEXTS.length - 1);
     noText.textContent = NO_BTN_TEXTS[labelIdx];
 
-    // Compute random translation within boundaries
     const zoneRect = zone.getBoundingClientRect();
     const maxTranslateX = (zoneRect.width / 2) - 40;
     const maxTranslateY = 60;
@@ -477,7 +603,6 @@ function setupEvasiveNoButton() {
 
     btnNo.style.transform = `translate(${randX}px, ${randY}px) rotate(${randRotate}deg) scale(0.92)`;
 
-    // Make YES button more enticing!
     const yesScale = Math.min(1 + noAttempts * 0.05, 1.35);
     btnYes.style.transform = `scale(${yesScale})`;
     btnYes.style.boxShadow = `0 8px 30px rgba(255, 27, 54, ${Math.min(0.4 + noAttempts * 0.1, 0.9)})`;
@@ -489,7 +614,7 @@ function setupEvasiveNoButton() {
 }
 
 // ==========================================
-// 7. THE "SÍ" BUTTON & HAPPY STICKER ("¡VAMOOOO!")
+// 9. THE "SÍ" BUTTON & HAPPY STICKER ("¡VAMOOOO!")
 // ==========================================
 function setupYesButton() {
   const btnYes = document.getElementById('btnYes');
@@ -500,18 +625,17 @@ function setupYesButton() {
     let clientX = e.clientX;
     let clientY = e.clientY;
 
-    // Spawn the requested HAPPY STICKER: "¡VAMOOOO!" 🎉
-    spawnSticker('happy', clientX, clientY, '¡VAMOOOO! 😎🔥');
+    // Spawn Esequiel's Happy Face Sticker
+    spawnSticker('happy', clientX, clientY, '¡VAMOOOO! 👅🎉');
 
-    sounds.playCelebration();
+    audioMgr.playCelebration();
     fireMassiveConfetti();
 
-    // Show celebration modal
     overlay.classList.add('active');
   });
 
   btnProceed.addEventListener('click', () => {
-    sounds.playClick();
+    audioMgr.playClick();
     overlay.classList.remove('active');
     document.getElementById('party-details').scrollIntoView({ behavior: 'smooth' });
   });
@@ -553,10 +677,10 @@ function fireMassiveConfetti() {
 }
 
 // ==========================================
-// 8. SPOTIFY & DJ SONGS LIST MANAGER
+// 10. SPOTIFY & DJ SONGS LIST MANAGER
 // ==========================================
 function getStoredSongs() {
-  const saved = localStorage.getItem('ese18_songs_v2');
+  const saved = localStorage.getItem('ese18_songs_v3');
   if (saved) {
     try {
       return JSON.parse(saved);
@@ -597,15 +721,15 @@ function addSong(songName, guestName) {
     name: songName,
     by: guestName || 'Invitado'
   });
-  localStorage.setItem('ese18_songs_v2', JSON.stringify(songs));
+  localStorage.setItem('ese18_songs_v3', JSON.stringify(songs));
   renderSongs();
 }
 
 // ==========================================
-// 9. GUESTBOOK / WALL OF MESSAGES
+// 11. GUESTBOOK / WALL OF MESSAGES
 // ==========================================
 function getStoredMessages() {
-  const data = localStorage.getItem('ese18_messages_v2');
+  const data = localStorage.getItem('ese18_messages_v3');
   if (data) {
     try {
       return JSON.parse(data);
@@ -645,12 +769,12 @@ function addMessage(name, text, song) {
     song,
     time: "Recién"
   });
-  localStorage.setItem('ese18_messages_v2', JSON.stringify(msgs));
+  localStorage.setItem('ese18_messages_v3', JSON.stringify(msgs));
   renderMessages();
 }
 
 // ==========================================
-// 10. RSVP FORM & WHATSAPP GENERATION (No Drinks)
+// 12. RSVP FORM & WHATSAPP GENERATION
 // ==========================================
 function setupRsvpForm() {
   const form = document.getElementById('rsvpForm');
@@ -667,24 +791,16 @@ function setupRsvpForm() {
 
     if (!name) return;
 
-    // Spawn Happy Sticker "¡VAMOOOO!"
     spawnSticker('happy', window.innerWidth / 2, window.innerHeight / 2, '¡VAMOOOO! 🎉');
-    sounds.playCelebration();
+    audioMgr.playCelebration();
     fireMassiveConfetti();
 
-    // Add song to collaborative Spotify list
-    if (song) {
-      addSong(song, name);
-    }
-
-    // Save message to guestbook
+    if (song) addSong(song, name);
     addMessage(name, note, song);
 
-    // Update ticket with guest name
     const sanitizedCode = name.replace(/\s+/g, '-').toUpperCase().slice(0, 8);
     ticketId.textContent = `#VIP-18-${sanitizedCode}`;
 
-    // Craft WhatsApp message
     const cfg = getConfig();
     let msg = `*¡CONFIRMACIÓN DE ASISTENCIA - CUMPLE DE ${cfg.name.toUpperCase()} (18 AÑOS)!* 🔞🔥\n\n`;
     msg += `👤 *Invitado:* ${name}\n`;
@@ -703,12 +819,10 @@ function setupRsvpForm() {
       waUrl = `https://api.whatsapp.com/send?text=${encodedMsg}`;
     }
 
-    // Show local success badge
     form.style.display = 'none';
     successBadge.style.display = 'flex';
     confirmedText.textContent = `¡Excelente ${name}! Te redirigimos a WhatsApp para avisarle a ${cfg.name}...`;
 
-    // Open WhatsApp
     setTimeout(() => {
       window.open(waUrl, '_blank');
     }, 700);
@@ -716,12 +830,12 @@ function setupRsvpForm() {
 }
 
 // ==========================================
-// 11. ADD TO CALENDAR (.ICS FILE GENERATION)
+// 13. CALENDAR & SOUND TOGGLE
 // ==========================================
 function setupCalendarButton() {
   const btn = document.getElementById('btnAddToCalendar');
   btn.addEventListener('click', () => {
-    sounds.playClick();
+    audioMgr.playClick();
     const cfg = getConfig();
 
     let dtStart = '20270323T230000';
@@ -766,28 +880,15 @@ function setupCalendarButton() {
   });
 }
 
-// ==========================================
-// 12. SOUND TOGGLE BUTTON
-// ==========================================
 function setupSoundToggle() {
   const btn = document.getElementById('soundToggle');
-  const icon = document.getElementById('soundIcon');
-
   btn.addEventListener('click', () => {
-    sounds.togglePartyBeat((isPlaying) => {
-      if (isPlaying) {
-        btn.classList.add('playing');
-        icon.textContent = '🔊';
-      } else {
-        btn.classList.remove('playing');
-        icon.textContent = '🔇';
-      }
-    });
+    audioMgr.toggleMusic();
   });
 }
 
 // ==========================================
-// 13. CONFIGURATION MODAL (For Esequiel)
+// 14. CONFIGURATION MODAL (For Esequiel)
 // ==========================================
 function setupConfigModal() {
   const modal = document.getElementById('configModal');
@@ -795,7 +896,6 @@ function setupConfigModal() {
   const closeBtn = document.getElementById('closeModalBtn');
   const saveBtn = document.getElementById('saveConfigBtn');
 
-  // Fields
   const fName = document.getElementById('cfgName');
   const fDateText = document.getElementById('cfgDateText');
   const fCountdownDate = document.getElementById('cfgCountdownDate');
@@ -807,7 +907,7 @@ function setupConfigModal() {
   const fDressCode = document.getElementById('cfgDressCode');
 
   openBtn.addEventListener('click', () => {
-    sounds.playClick();
+    audioMgr.playClick();
     const cfg = getConfig();
     fName.value = cfg.name;
     fDateText.value = cfg.dateText;
@@ -822,16 +922,13 @@ function setupConfigModal() {
     modal.classList.add('open');
   });
 
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('open');
-  });
-
+  closeBtn.addEventListener('click', () => modal.classList.remove('open'));
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('open');
   });
 
   saveBtn.addEventListener('click', () => {
-    sounds.playClick();
+    audioMgr.playClick();
     const updated = {
       name: fName.value.trim() || 'Esequiel',
       age: 18,
@@ -866,12 +963,13 @@ function escapeHtml(str) {
 }
 
 // ==========================================
-// 14. INITIALIZATION
+// 15. INITIALIZATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
   const cfg = getConfig();
   applyConfig(cfg);
   startCountdown();
+  setupIntroSequence();
   setupPhotoReaction();
   setupEvasiveNoButton();
   setupYesButton();

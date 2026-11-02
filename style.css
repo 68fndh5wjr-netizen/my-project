@@ -1,0 +1,1228 @@
+/* ==========================================================================
+   CUMPLEAÑOS ESEQUIEL . 18 - ESTILOS OFICIALES
+   Estética: Underground Club / Dark Mode / High-Voltage Neon Red
+   ========================================================================== */
+
+:root {
+  --bg-main: #080808;
+  --bg-card: #111111;
+  --bg-card-light: #181818;
+  --neon-red: #ff1b36;
+  --neon-red-glow: rgba(255, 27, 54, 0.45);
+  --neon-red-dark: #b80017;
+  --text-white: #f5f5f5;
+  --text-muted: #8e8e93;
+  --text-dim: #555555;
+  --border-dark: #222222;
+  --border-red: #ff1b36;
+  --font-display: 'Bebas Neue', 'Anton', sans-serif;
+  --font-headline: 'Anton', 'Bebas Neue', sans-serif;
+  --font-mono: 'Space Grotesk', monospace, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-main);
+  color: var(--text-white);
+  font-family: var(--font-sans);
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(255, 27, 54, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 80% 60%, rgba(255, 27, 54, 0.08) 0%, transparent 40%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Red Dots */
+.red-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--neon-red);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-red);
+}
+
+.live-pulse {
+  animation: pulse-dot 1.8s infinite;
+}
+
+@keyframes pulse-dot {
+  0% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 0 0 rgba(255, 27, 54, 0.7); }
+  70% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 0 8px rgba(255, 27, 54, 0); }
+  100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 0 0 rgba(255, 27, 54, 0); }
+}
+
+/* ==========================================================================
+   TOP BAR / NAVIGATION
+   ========================================================================== */
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.brand-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: var(--text-white);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sound-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: var(--text-white);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sound-btn:hover {
+  background: #252525;
+  border-color: var(--neon-red);
+}
+
+.sound-btn.playing {
+  background: var(--neon-red);
+  color: #fff;
+  border-color: var(--neon-red);
+  box-shadow: 0 0 12px var(--neon-red-glow);
+}
+
+.edit-btn {
+  background: transparent;
+  border: 1px solid #333;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.edit-btn:hover {
+  border-color: #666;
+  color: #fff;
+}
+
+/* ==========================================================================
+   PAGE CONTAINER
+   ========================================================================== */
+.page-container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 16px 60px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ==========================================================================
+   HERO SECTION (Esequiel's Photo Card)
+   ========================================================================== */
+.hero-section {
+  width: 100%;
+}
+
+.hero-card {
+  position: relative;
+  background: var(--bg-card);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border-dark);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 27, 54, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 14;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-card:hover .hero-img {
+  transform: scale(1.02);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(8, 8, 8, 0.4) 75%,
+    rgba(8, 8, 8, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+/* Floating Red Dots mimicking the poster */
+.glow-dots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.floating-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--neon-red);
+  box-shadow: 0 0 15px var(--neon-red), 0 0 30px var(--neon-red);
+}
+
+.dot-1 {
+  width: 18px;
+  height: 18px;
+  top: 27%;
+  right: 28%;
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+.dot-2 {
+  width: 22px;
+  height: 22px;
+  bottom: 35%;
+  right: 6%;
+  animation: float-slow 5s ease-in-out infinite reverse;
+}
+
+.dot-3 {
+  width: 12px;
+  height: 12px;
+  bottom: 8%;
+  left: 5%;
+  animation: float-slow 3.5s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.1); }
+}
+
+.hero-badge-container {
+  padding: 24px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+}
+
+.party-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(255, 27, 54, 0.15);
+  border: 1px solid var(--neon-red);
+  border-radius: 30px;
+  color: var(--neon-red);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.hero-caption {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.btn-scroll-down {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 280px;
+  margin-top: 8px;
+  padding: 14px 20px;
+  background: var(--neon-red);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 14px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  box-shadow: 0 8px 25px var(--neon-red-glow);
+  transition: all 0.25s ease;
+}
+
+.btn-scroll-down:hover {
+  background: #ff334b;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 27, 54, 0.6);
+}
+
+.arrow-down {
+  animation: bounce-y 1.5s infinite;
+}
+
+@keyframes bounce-y {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(5px); }
+  60% { transform: translateY(3px); }
+}
+
+/* ==========================================================================
+   MEME QUESTION SECTION "¿VENÍS?" (Matching photo 2)
+   ========================================================================== */
+.question-section {
+  position: relative;
+  width: 100%;
+}
+
+.meme-card-frame {
+  position: relative;
+  padding: 10px;
+  background: #000000;
+  border: 6px solid var(--neon-red);
+  border-radius: 20px;
+  box-shadow: 
+    0 0 25px var(--neon-red-glow),
+    inset 0 0 20px rgba(255, 27, 54, 0.2);
+}
+
+.meme-card {
+  background: #000000;
+  padding: 24px 16px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  position: relative;
+  min-height: 440px;
+  justify-content: space-between;
+}
+
+.meme-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meme-eyebrow {
+  font-family: var(--font-headline);
+  font-size: 2.8rem;
+  line-height: 1;
+  color: var(--neon-red);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px rgba(255, 27, 54, 0.4);
+}
+
+.meme-date {
+  font-family: var(--font-headline);
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: var(--neon-red);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Countdown */
+.countdown-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0d0d0d;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  width: 100%;
+  max-width: 320px;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cd-num {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cd-label {
+  font-size: 0.6rem;
+  color: var(--neon-red);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.cd-sep {
+  font-family: var(--font-mono);
+  color: var(--neon-red);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: -6px;
+}
+
+.meme-center-area {
+  margin: 10px 0;
+}
+
+.meme-question {
+  font-family: var(--font-headline);
+  font-size: 3.4rem;
+  color: var(--neon-red);
+  letter-spacing: 2px;
+  line-height: 1;
+  text-shadow: 0 0 20px var(--neon-red-glow);
+  animation: flicker 3s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 20px var(--neon-red-glow);
+  }
+  20%, 24%, 55% {
+    opacity: 0.7;
+    text-shadow: none;
+  }
+}
+
+/* Interactive Buttons Zone */
+.meme-buttons-zone {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.meme-btn {
+  height: 68px;
+  min-width: 130px;
+  background: var(--neon-red);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-headline);
+  font-size: 2.2rem;
+  letter-spacing: 1.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  transition: transform 0.15s ease, background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 0 #900010, 0 10px 20px rgba(0, 0, 0, 0.7);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.meme-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #900010;
+}
+
+.btn-yes {
+  position: relative;
+  z-index: 5;
+  background: var(--neon-red);
+}
+
+.btn-yes:hover {
+  background: #ff2d46;
+  box-shadow: 0 6px 0 #900010, 0 0 30px var(--neon-red-glow);
+}
+
+.btn-subtext {
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.btn-no {
+  background: #2b0307;
+  color: #ff8594;
+  border: 2px solid var(--neon-red);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+
+.meme-footer {
+  width: 100%;
+  padding-top: 10px;
+}
+
+.meme-footer-text {
+  font-family: var(--font-headline);
+  font-size: 2.2rem;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+/* Toast for evasive NO */
+.joke-toast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: rgba(20, 0, 4, 0.95);
+  border: 2px solid var(--neon-red);
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 50;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 20px var(--neon-red-glow);
+}
+
+.joke-toast.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ==========================================================================
+   DETAILS SECTION (VIP Ticket & RSVP)
+   ========================================================================== */
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* RAVE / VIP TICKET CARD */
+.ticket-container {
+  width: 100%;
+  perspective: 1000px;
+}
+
+.ticket {
+  position: relative;
+  background: linear-gradient(135deg, #181818 0%, #111111 60%, #1c1c1c 100%);
+  border-radius: 18px;
+  border: 1px solid #333;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 27, 54, 0.1);
+}
+
+.ticket::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--neon-red), #ff758c, var(--neon-red));
+}
+
+.ticket-header {
+  padding: 20px 20px 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #222;
+}
+
+.ticket-tag {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--neon-red);
+  font-weight: 800;
+}
+
+.ticket-logo h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  color: #fff;
+  margin-top: 2px;
+}
+
+.ticket-pass-id {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: #080808;
+  color: var(--neon-red);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #333;
+}
+
+.ticket-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticket-row {
+  display: flex;
+  gap: 16px;
+}
+
+.ticket-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ticket-col.full-width {
+  flex: 1 1 100%;
+}
+
+.t-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+}
+
+.t-value {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--neon-red);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.map-link:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.ticket-actions {
+  padding: 0 20px 16px 20px;
+}
+
+.btn-cal {
+  width: 100%;
+  padding: 10px 14px;
+  background: #222;
+  border: 1px solid #3a3a3a;
+  color: #fff;
+  border-radius: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.btn-cal:hover {
+  background: #2a2a2a;
+  border-color: var(--neon-red);
+}
+
+/* Tear line */
+.ticket-tear {
+  position: relative;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.tear-line {
+  width: 100%;
+  border-top: 2px dashed #333;
+}
+
+.tear-notch {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background: var(--bg-main);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.notch-left {
+  left: -11px;
+  box-shadow: inset -2px 0 3px rgba(0,0,0,0.5);
+}
+
+.notch-right {
+  right: -11px;
+  box-shadow: inset 2px 0 3px rgba(0,0,0,0.5);
+}
+
+/* Stub */
+.ticket-stub {
+  padding: 14px 20px 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d0d0d;
+}
+
+.stub-barcode {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bars {
+  display: block;
+  height: 26px;
+  width: 130px;
+  background: repeating-linear-gradient(
+    90deg,
+    #fff,
+    #fff 2px,
+    transparent 2px,
+    transparent 4px,
+    #fff 4px,
+    #fff 5px,
+    transparent 5px,
+    transparent 8px
+  );
+  opacity: 0.8;
+}
+
+.barcode-num {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+.stub-admit {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.stub-admit span {
+  font-size: 0.65rem;
+  color: var(--neon-red);
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.stub-admit strong {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   RSVP FORM CARD
+   ========================================================================== */
+.rsvp-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dark);
+  border-radius: 20px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rsvp-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rsvp-badge {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--neon-red);
+  letter-spacing: 1.5px;
+}
+
+.rsvp-title {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.rsvp-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: #191919;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--neon-red);
+  box-shadow: 0 0 10px rgba(255, 27, 54, 0.25);
+}
+
+.btn-whatsapp-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #25d366;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: 1px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp-submit:hover {
+  background: #2bf075;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
+}
+
+.wa-icon {
+  font-size: 1.4rem;
+}
+
+.rsvp-confirmed-badge {
+  background: rgba(37, 211, 102, 0.12);
+  border: 1px solid #25d366;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.confirmed-icon {
+  font-size: 2rem;
+}
+
+.rsvp-confirmed-badge h4 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: #25d366;
+  letter-spacing: 1px;
+}
+
+.rsvp-confirmed-badge p {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* ==========================================================================
+   GUESTBOOK / WALL OF MESSAGES
+   ========================================================================== */
+.guestbook-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gb-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.gb-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.messages-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.msg-bubble {
+  background: #141414;
+  border: 1px solid #282828;
+  border-left: 3px solid var(--neon-red);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeIn 0.4s ease;
+}
+
+.msg-author {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.msg-time {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+.msg-text {
+  font-size: 0.85rem;
+  color: #ccc;
+  line-height: 1.35;
+}
+
+.msg-favorite-drink {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  background: rgba(255, 27, 54, 0.12);
+  color: var(--neon-red);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   CELEBRATION OVERLAY
+   ========================================================================== */
+.celebration-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.celebration-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.celebration-card {
+  background: #111;
+  border: 3px solid var(--neon-red);
+  border-radius: 20px;
+  padding: 30px 24px;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 0 40px var(--neon-red-glow);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.celebration-overlay.active .celebration-card {
+  transform: scale(1);
+}
+
+.celeb-emoji {
+  font-size: 3rem;
+  animation: bounce-y 1s infinite;
+}
+
+.celeb-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.celeb-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.btn-celeb-continue {
+  background: var(--neon-red);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px var(--neon-red-glow);
+  transition: transform 0.2s;
+  width: 100%;
+}
+
+.btn-celeb-continue:hover {
+  transform: scale(1.03);
+}
+
+/* ==========================================================================
+   CONFIG MODAL
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #141414;
+  border: 1px solid #333;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+}
+
+.modal-head {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
+
+.modal-head h3 {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.form-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.btn-save-cfg {
+  background: var(--neon-red);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.btn-save-cfg:hover {
+  background: #ff334b;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.page-footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border-dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #050505;
+}
+
+.footer-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.footer-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjust */
+@media (max-width: 400px) {
+  .meme-eyebrow {
+    font-size: 2.2rem;
+  }
+  .meme-date {
+    font-size: 1.4rem;
+  }
+  .meme-question {
+    font-size: 2.8rem;
+  }
+  .meme-btn {
+    min-width: 110px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
+}

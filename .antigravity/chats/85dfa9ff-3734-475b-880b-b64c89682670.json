@@ -64,6 +64,18 @@
       "created_at": "2026-11-02T20:25:25.220Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "60dba261-27c9-4b25-97d5-876d88587cc0",
+      "role": "agent",
+      "content": "¡Listo! Ya quedaron aplicados todos los cambios y mejoras:\n\n👉 **[Ver Invitación Web Actualizada](https://antigravity.luch.dev/site/43434aaf-b9f7-4721-b4f2-cbafc91f3098/13f2d8a5ae714fb9922ceb0f/)**\n\n---\n\n### Cambios realizados:\n\n1. **Ubicación oficial del salón**:\n   - Se configuró la dirección real: **María Orticochea 4183, Montevideo**.\n   - En el Pase VIP aparece el botón destacado: **📍 Ver Salón en Google Maps** que abre directamente tu enlace de [Google Maps](https://maps.app.goo.gl/Xb3xjy4f4ADwYHi49?g_st=ic).\n\n2. **Stickers interactivos con sonido**:\n   - **Sticker enojado (`😡 ¡¿QUÉ ME TOCÁS?!`)**: salta justo donde el usuario toca cuando intenta apretar el botón **\"NO\"** (¡y también si tocan la foto de Esequiel en la portada!).\n   - **Sticker contento (`😎🔥 ¡VAMOOOO!`)**: explota en la pantalla cuando hacen clic en **\"SÍ\"** para confirmar asistencia y al enviar el formulario, acompañado de confeti.\n\n3. **Sección de bebidas eliminada**:\n   - Se quitó por completo la selección de tragos del formulario de confirmación y del muro.\n\n4. **Integración con Spotify & Playlist Colaborativa**:\n   - Se agregó la sección **\"Armemos la Playlist del Cumple 🎧\"** con reproductor de Spotify incorporado y botón directo para abrir y sumar canciones.\n   - En el formulario, cuando el invitado escribe su tema preferido, se suma automáticamente a la lista en vivo de la web con un botón para **buscarlo y agregarlo en Spotify al instante**.\n   - También se incluye el tema en el mensaje que te envían a WhatsApp.\n   - Si creaste una playlist colaborativa propia en Spotify, podés pegar el enlace en el botón de ajustes (**⚙️**) y se actualizará al instante en la web.",
+      "status": "completed",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "f2d31a03-63ed-4835-990f-ee2de132d55f",
+      "created_at": "2026-11-02T20:29:21.990Z",
+      "sender": "macOS",
+      "is_cancelled": false
     }
   ]
 }

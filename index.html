@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Cumpleaños Esequiel . 18</title>
+  <meta name="description" content="Invitación oficial a los 18 de Esequiel. ¿Venís?">
+  <meta name="theme-color" content="#080808">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cumpleaños Esequiel . 18">
+  <meta property="og:description" content="¿Venís a festejar mis 18? Confirmá tu asistencia acá.">
+  <meta property="og:image" content="assets/esequiel.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Audio & Controls -->
+  <header class="top-nav">
+    <div class="brand-tag">
+      <span class="red-dot live-pulse"></span>
+      <span class="brand-text">ESEQUIEL . 18</span>
+    </div>
+    <div class="nav-actions">
+      <button id="soundToggle" class="sound-btn" aria-label="Activar / Desactivar Sonido">
+        <span class="sound-icon" id="soundIcon">🔇</span>
+        <span class="sound-label">MÚSICA</span>
+      </button>
+      <button id="editConfigBtn" class="edit-btn" title="Personalizar datos de la fiesta">
+        ⚙️
+      </button>
+    </div>
+  </header>
+
+  <main class="page-container">
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-card">
+        <div class="hero-image-wrapper">
+          <img src="assets/esequiel.jpg" alt="Cumpleaños Esequiel . 18" class="hero-img" id="heroImage">
+          <div class="hero-overlay"></div>
+          <div class="glow-dots">
+            <span class="floating-dot dot-1"></span>
+            <span class="floating-dot dot-2"></span>
+            <span class="floating-dot dot-3"></span>
+          </div>
+        </div>
+        <div class="hero-badge-container">
+          <span class="party-badge">🔥 VIP ACCESS • 18 AÑOS</span>
+          <p class="hero-caption">Se festeja a lo grande y no podés faltar.</p>
+          <a href="#question-card" class="btn-scroll-down">
+            <span>RESPONDER INVITACIÓN</span>
+            <svg class="arrow-down" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE "¿VENÍS?" MEME / INTERACTIVE QUESTION SECTION -->
+    <section class="question-section" id="question-card">
+      <div class="meme-card-frame">
+        <div class="meme-card">
+          <div class="meme-header">
+            <span class="meme-eyebrow">MI CUMPLE</span>
+            <h2 class="meme-date" id="displayDateHeader">VIERNES 23 DE MARZO</h2>
+          </div>
+
+          <div class="countdown-bar">
+            <div class="countdown-unit">
+              <span class="cd-num" id="cdDays">00</span>
+              <span class="cd-label">DÍAS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="countdown-unit">
+              <span class="cd-num" id="cdHours">00</span>
+              <span class="cd-label">HORAS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="countdown-unit">
+              <span class="cd-num" id="cdMins">00</span>
+              <span class="cd-label">MINS</span>
+            </div>
+            <span class="cd-sep">:</span>
+            <div class="countdown-unit">
+              <span class="cd-num" id="cdSecs">00</span>
+              <span class="cd-label">SEGS</span>
+            </div>
+          </div>
+
+          <div class="meme-center-area">
+            <h1 class="meme-question">¿VENÍS?</h1>
+          </div>
+
+          <div class="meme-buttons-zone" id="buttonsZone">
+            <button id="btnYes" class="meme-btn btn-yes">
+              <span>SÍ</span>
+              <span class="btn-subtext">OBVIO 🎉</span>
+            </button>
+            <button id="btnNo" class="meme-btn btn-no">
+              <span id="noBtnText">NO</span>
+            </button>
+          </div>
+
+          <div class="meme-footer">
+            <span class="meme-footer-text">ENTONCES...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Funny tooltip / message when trying to click NO -->
+      <div id="noJokeToast" class="joke-toast"></div>
+    </section>
+
+    <!-- SUCCESS REVEAL / PARTY DETAILS SECTION (Unlocked or Scrolled) -->
+    <section class="details-section" id="party-details">
+      
+      <!-- VIP PASS / TICKET -->
+      <div class="ticket-container">
+        <div class="ticket">
+          <div class="ticket-header">
+            <div class="ticket-logo">
+              <span class="ticket-tag">OFFICIAL INVITATION</span>
+              <h3>ESEQUIEL 18th B-DAY</h3>
+            </div>
+            <div class="ticket-pass-id" id="ticketId">#VIP-18-024</div>
+          </div>
+
+          <div class="ticket-body">
+            <div class="ticket-row">
+              <div class="ticket-col">
+                <span class="t-label">FECHA</span>
+                <span class="t-value" id="ticketDate">Viernes 23 de Marzo</span>
+              </div>
+              <div class="ticket-col">
+                <span class="t-label">HORA</span>
+                <span class="t-value" id="ticketTime">23:00 HS</span>
+              </div>
+            </div>
+
+            <div class="ticket-row">
+              <div class="ticket-col full-width">
+                <span class="t-label">UBICACIÓN</span>
+                <span class="t-value" id="ticketLocation">Ubicación Secreta / Zona Sur</span>
+                <a id="btnMap" href="https://maps.google.com" target="_blank" rel="noopener" class="map-link">
+                  📍 Ver en Google Maps
+                </a>
+              </div>
+            </div>
+
+            <div class="ticket-row">
+              <div class="ticket-col">
+                <span class="t-label">DRESS CODE</span>
+                <span class="t-value" id="ticketDressCode">Total Black / Streetwear</span>
+              </div>
+              <div class="ticket-col">
+                <span class="t-label">LINE UP</span>
+                <span class="t-value">Cachengue • RKT • Techno</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar Add Button -->
+          <div class="ticket-actions">
+            <button id="btnAddToCalendar" class="btn-cal">
+              📅 Guardar en mi Calendario
+            </button>
+          </div>
+
+          <!-- Perforated Tear Line -->
+          <div class="ticket-tear">
+            <div class="tear-notch notch-left"></div>
+            <div class="tear-line"></div>
+            <div class="tear-notch notch-right"></div>
+          </div>
+
+          <div class="ticket-stub">
+            <div class="stub-barcode">
+              <span class="bars"></span>
+              <span class="barcode-num">0 8 1 9 2 0 0 6 2 0 2 4</span>
+            </div>
+            <div class="stub-admit">
+              <span>ADMIT ONE</span>
+              <strong>ESE 18</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RSVP FORM -->
+      <div class="rsvp-card">
+        <div class="rsvp-header">
+          <span class="rsvp-badge">CONFIRMACIÓN OBLIGATORIA</span>
+          <h3 class="rsvp-title">Anotate en la Lista VIP</h3>
+          <p class="rsvp-desc">Confirmá para que te tengamos en cuenta para la barra y la comida.</p>
+        </div>
+
+        <form id="rsvpForm" class="rsvp-form">
+          <div class="form-group">
+            <label for="guestName">Tu Nombre y Apellido *</label>
+            <input type="text" id="guestName" placeholder="Ej: Lucas Martínez" required>
+          </div>
+
+          <div class="form-group">
+            <label for="guestDrink">¿Qué trago preferís?</label>
+            <select id="guestDrink">
+              <option value="Fernet con Coca">Fernet con Coca</option>
+              <option value="Vodka con Energizante">Vodka con Speed / Energizante</option>
+              <option value="Gin Tonic">Gin Tonic</option>
+              <option value="Cerveza">Cerveza bien fría</option>
+              <option value="Campari / Aperol">Campari / Aperol</option>
+              <option value="Sin Alcohol / Gaseosa">Gaseosa / Sin Alcohol</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="guestSong">¿Qué tema querés que suene sí o sí? 🎵</label>
+            <input type="text" id="guestSong" placeholder="Canción / Artista para el DJ">
+          </div>
+
+          <div class="form-group">
+            <label for="guestNote">Mensaje / Dedicatoria para Ese</label>
+            <textarea id="guestNote" rows="2" placeholder="Dejale unas palabras..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-whatsapp-submit">
+            <span class="wa-icon">💬</span>
+            <span>CONFIRMAR POR WHATSAPP</span>
+          </button>
+        </form>
+
+        <div id="rsvpSuccessCard" class="rsvp-confirmed-badge" style="display: none;">
+          <div class="confirmed-icon">✅</div>
+          <h4>¡LISTA CONFIRMADA!</h4>
+          <p id="confirmedGuestText">Te esperamos para romper la noche.</p>
+        </div>
+      </div>
+
+      <!-- GUESTBOOK / WALL OF MESSAGES -->
+      <div class="guestbook-section">
+        <h3 class="gb-title">Muro de Saludos 💬</h3>
+        <p class="gb-sub">Los mensajes que le van dejando a Esequiel:</p>
+        <div class="messages-stream" id="messagesStream">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="footer-dots">
+      <span class="red-dot"></span>
+      <span class="red-dot"></span>
+      <span class="red-dot"></span>
+    </div>
+    <p class="footer-title">CUMPLEAÑOS ESEQUIEL • 18 AÑOS</p>
+    <p class="footer-sub">Prohibido no ponerse en pedo • Se reserva el derecho de manija</p>
+  </footer>
+
+  <!-- CONFIGURATION MODAL (For Esequiel to customize the party details) -->
+  <div id="configModal" class="modal-backdrop">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>⚙️ Configurar Fiesta</h3>
+        <button id="closeModalBtn" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p class="modal-hint">Podés personalizar los datos de tu fiesta acá. Los cambios se guardan al instante.</p>
+        <div class="form-group">
+          <label>Nombre del Agasajado:</label>
+          <input type="text" id="cfgName" value="Esequiel">
+        </div>
+        <div class="form-group">
+          <label>Fecha del Cumple (Texto):</label>
+          <input type="text" id="cfgDateText" value="Viernes 23 de Marzo">
+        </div>
+        <div class="form-group">
+          <label>Fecha para Cuenta Regresiva (YYYY-MM-DDTHH:MM):</label>
+          <input type="datetime-local" id="cfgCountdownDate">
+        </div>
+        <div class="form-group">
+          <label>Hora:</label>
+          <input type="text" id="cfgTime" value="23:00 HS">
+        </div>
+        <div class="form-group">
+          <label>Lugar / Dirección:</label>
+          <input type="text" id="cfgLocation" value="Quinta / Salón (Consultar privado)">
+        </div>
+        <div class="form-group">
+          <label>Link de Google Maps (opcional):</label>
+          <input type="url" id="cfgMapsUrl" placeholder="https://maps.app.goo.gl/...">
+        </div>
+        <div class="form-group">
+          <label>Número de WhatsApp para recibir confirmaciones:</label>
+          <input type="tel" id="cfgWhatsapp" placeholder="Ej: 5491112345678 (con código de país sin +)">
+          <small class="form-hint">Si lo dejás vacío, se abrirá WhatsApp para que el invitado elija tu contacto.</small>
+        </div>
+        <div class="form-group">
+          <label>Dress Code:</label>
+          <input type="text" id="cfgDressCode" value="Total Black / Streetwear">
+        </div>
+        <button id="saveConfigBtn" class="btn-save-cfg">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CELEBRATION POPUP AFTER CLICKING "SÍ" -->
+  <div id="celebrationOverlay" class="celebration-overlay">
+    <div class="celebration-card">
+      <div class="celeb-emoji">🍾💥🔥</div>
+      <h2 class="celeb-title">¡SABÍA QUE NO IBAS A FALLAR!</h2>
+      <p class="celeb-sub">Te ganaste tu Pase VIP para los 18 de Esequiel.</p>
+      <div class="celeb-action">
+        <button id="btnProceedToDetails" class="btn-celeb-continue">VER MI PASE VIP 🎟️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

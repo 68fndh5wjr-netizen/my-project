@@ -40,6 +40,18 @@
       "created_at": "2026-11-02T20:14:40.401Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "68d9a004-b0d6-4a78-8ec7-f5353bf360ee",
+      "role": "agent",
+      "content": "¡Sí, perfecto! Llegaron impecables las dos fotos y la web ya está armada y funcionando al 100%. 🚀\n\nPodés abrirla y probarla directamente desde tu celular en este enlace:\n👉 **https://antigravity.luch.dev/site/43434aaf-b9f7-4721-b4f2-cbafc91f3098/13f2d8a5ae714fb9922ceb0f/**\n\nEntrá a chusmearla y probala:\n- Intentá tocar el botón **\"NO\"** a ver qué pasa 😉\n- Tocá **\"SÍ\"** para ver los efectos de confeti y abrir el pase VIP\n- Podés probar la confirmación por WhatsApp o tocar el engranaje **⚙️** arriba para cambiar la fecha exacta, horario, dirección o tu número de teléfono.\n\n¿Querés que le cambiemos o agreguemos algún detalle en particular?",
+      "status": "completed",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "8c4a8dd1-1e83-4466-82c4-ede56d1ceee5",
+      "created_at": "2026-11-02T20:15:05.015Z",
+      "sender": "macOS",
+      "is_cancelled": false
     }
   ]
 }

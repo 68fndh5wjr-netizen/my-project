@@ -4,24 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Cumpleaños Esequiel . 18</title>
-  <meta name="description" content="Invitación oficial a los 18 de Esequiel. ¿Venís?">
+  <meta name="description" content="Invitación oficial a los 18 de Esequiel en Montevideo. ¿Venís?">
   <meta name="theme-color" content="#080808">
 
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Cumpleaños Esequiel . 18">
-  <meta property="og:description" content="¿Venís a festejar mis 18? Confirmá tu asistencia acá.">
+  <meta property="og:description" content="¿Venís a festejar mis 18 en Montevideo? Confirmá tu asistencia acá.">
   <meta property="og:image" content="assets/esequiel.jpg">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Space+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Ambient Audio & Controls -->
+  <!-- Container for dynamically spawned stickers -->
+  <div id="stickersContainer" class="stickers-container"></div>
+
+  <!-- Top Navigation & Controls -->
   <header class="top-nav">
     <div class="brand-tag">
       <span class="red-dot live-pulse"></span>
@@ -40,9 +43,9 @@
 
   <main class="page-container">
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (Esequiel's Photo Card - Tap it for a surprise!) -->
     <section class="hero-section" id="hero">
-      <div class="hero-card">
+      <div class="hero-card" id="heroCard">
         <div class="hero-image-wrapper">
           <img src="assets/esequiel.jpg" alt="Cumpleaños Esequiel . 18" class="hero-img" id="heroImage">
           <div class="hero-overlay"></div>
@@ -51,9 +54,10 @@
             <span class="floating-dot dot-2"></span>
             <span class="floating-dot dot-3"></span>
           </div>
+          <span class="tap-hint">👆 Tocá la foto</span>
         </div>
         <div class="hero-badge-container">
-          <span class="party-badge">🔥 VIP ACCESS • 18 AÑOS</span>
+          <span class="party-badge">🔥 VIP ACCESS • MONTEVIDEO • 18 AÑOS</span>
           <p class="hero-caption">Se festeja a lo grande y no podés faltar.</p>
           <a href="#question-card" class="btn-scroll-down">
             <span>RESPONDER INVITACIÓN</span>
@@ -120,7 +124,7 @@
       <div id="noJokeToast" class="joke-toast"></div>
     </section>
 
-    <!-- SUCCESS REVEAL / PARTY DETAILS SECTION (Unlocked or Scrolled) -->
+    <!-- SUCCESS REVEAL / PARTY DETAILS SECTION -->
     <section class="details-section" id="party-details">
       
       <!-- VIP PASS / TICKET -->
@@ -148,10 +152,11 @@
 
             <div class="ticket-row">
               <div class="ticket-col full-width">
-                <span class="t-label">UBICACIÓN</span>
-                <span class="t-value" id="ticketLocation">Ubicación Secreta / Zona Sur</span>
-                <a id="btnMap" href="https://maps.google.com" target="_blank" rel="noopener" class="map-link">
-                  📍 Ver en Google Maps
+                <span class="t-label">UBICACIÓN DEL SALÓN</span>
+                <span class="t-value" id="ticketLocation">María Orticochea 4183, Montevideo</span>
+                <a id="btnMap" href="https://maps.app.goo.gl/Xb3xjy4f4ADwYHi49?g_st=ic" target="_blank" rel="noopener" class="map-link">
+                  <span class="map-icon">📍</span>
+                  <span>Ver Salón en Google Maps (Tocá acá para ver cómo llegar)</span>
                 </a>
               </div>
             </div>
@@ -163,7 +168,7 @@
               </div>
               <div class="ticket-col">
                 <span class="t-label">LINE UP</span>
-                <span class="t-value">Cachengue • RKT • Techno</span>
+                <span class="t-value">Cachengue • RKT • Trap</span>
               </div>
             </div>
           </div>
@@ -171,7 +176,7 @@
           <!-- Calendar Add Button -->
           <div class="ticket-actions">
             <button id="btnAddToCalendar" class="btn-cal">
-              📅 Guardar en mi Calendario
+              📅 Guardar en mi Calendario (.ics)
             </button>
           </div>
 
@@ -195,12 +200,54 @@
         </div>
       </div>
 
-      <!-- RSVP FORM -->
+      <!-- SPOTIFY COLLABORATIVE PLAYLIST SECTION -->
+      <div class="spotify-card">
+        <div class="spotify-badge-header">
+          <span class="spotify-dot"></span>
+          <span>SPOTIFY COLLABORATIVE PLAYLIST</span>
+        </div>
+        <h3 class="spotify-title">Armemos la Playlist del Cumple 🎧</h3>
+        <p class="spotify-desc">
+          ¡Meté tus canciones favoritas para que suenen toda la noche con el DJ!
+        </p>
+        
+        <!-- Embedded Spotify Player -->
+        <div class="spotify-embed-container" id="spotifyEmbedWrapper">
+          <iframe 
+            id="spotifyIframe"
+            style="border-radius:12px; border: none;" 
+            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0" 
+            width="100%" 
+            height="152" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <div class="spotify-action-buttons">
+          <a id="btnSpotifyOpen" href="https://open.spotify.com" target="_blank" rel="noopener" class="btn-spotify-link">
+            <svg class="spotify-logo-svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.497 17.315c-.218.358-.684.472-1.042.254-2.855-1.745-6.449-2.14-10.684-1.173-.41.093-.815-.164-.908-.573-.093-.41.164-.816.573-.909 4.636-1.06 8.608-.607 11.807 1.348.358.218.472.684.254 1.053zm1.467-3.26c-.275.448-.863.593-1.312.318-3.268-2.008-8.25-2.592-12.116-1.417-.502.152-1.034-.135-1.186-.637-.153-.502.134-1.034.636-1.186 4.417-1.34 9.914-.686 13.66 1.616.448.275.593.864.318 1.306zm.126-3.41c-3.917-2.326-10.37-2.54-14.123-1.399-.602.183-1.24-.162-1.423-.763-.183-.601.162-1.239.763-1.422 4.309-1.308 11.43-1.058 15.932 1.615.54.321.716 1.022.395 1.562-.32.54-1.022.716-1.544.407z"/>
+            </svg>
+            <span>Sumar Temas en la Playlist de Spotify</span>
+          </a>
+        </div>
+
+        <!-- Live Requested Songs for DJ -->
+        <div class="dj-songs-box">
+          <span class="dj-box-label">🔥 Temas pedidos por los invitados:</span>
+          <div id="songsListContainer" class="songs-pill-list">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- RSVP FORM (Sin las bebidas, enfocado en nombre, canción y dedicatoria) -->
       <div class="rsvp-card">
         <div class="rsvp-header">
           <span class="rsvp-badge">CONFIRMACIÓN OBLIGATORIA</span>
           <h3 class="rsvp-title">Anotate en la Lista VIP</h3>
-          <p class="rsvp-desc">Confirmá para que te tengamos en cuenta para la barra y la comida.</p>
+          <p class="rsvp-desc">Confirmá tu presencia para que Esequiel te reserve tu lugar.</p>
         </div>
 
         <form id="rsvpForm" class="rsvp-form">
@@ -210,20 +257,9 @@
           </div>
 
           <div class="form-group">
-            <label for="guestDrink">¿Qué trago preferís?</label>
-            <select id="guestDrink">
-              <option value="Fernet con Coca">Fernet con Coca</option>
-              <option value="Vodka con Energizante">Vodka con Speed / Energizante</option>
-              <option value="Gin Tonic">Gin Tonic</option>
-              <option value="Cerveza">Cerveza bien fría</option>
-              <option value="Campari / Aperol">Campari / Aperol</option>
-              <option value="Sin Alcohol / Gaseosa">Gaseosa / Sin Alcohol</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="guestSong">¿Qué tema querés que suene sí o sí? 🎵</label>
-            <input type="text" id="guestSong" placeholder="Canción / Artista para el DJ">
+            <label for="guestSong">¿Qué tema querés que suene en el cumple? 🎵</label>
+            <input type="text" id="guestSong" placeholder="Canción y artista para la playlist" required>
+            <small class="form-hint">Se agregará a la lista del DJ y a Spotify.</small>
           </div>
 
           <div class="form-group">
@@ -265,7 +301,7 @@
       <span class="red-dot"></span>
     </div>
     <p class="footer-title">CUMPLEAÑOS ESEQUIEL • 18 AÑOS</p>
-    <p class="footer-sub">Prohibido no ponerse en pedo • Se reserva el derecho de manija</p>
+    <p class="footer-sub">María Orticochea 4183, Montevideo • Se reserva el derecho de manija</p>
   </footer>
 
   <!-- CONFIGURATION MODAL (For Esequiel to customize the party details) -->
@@ -294,17 +330,22 @@
           <input type="text" id="cfgTime" value="23:00 HS">
         </div>
         <div class="form-group">
-          <label>Lugar / Dirección:</label>
-          <input type="text" id="cfgLocation" value="Quinta / Salón (Consultar privado)">
+          <label>Lugar / Dirección del Salón:</label>
+          <input type="text" id="cfgLocation" value="María Orticochea 4183, Montevideo">
         </div>
         <div class="form-group">
-          <label>Link de Google Maps (opcional):</label>
-          <input type="url" id="cfgMapsUrl" placeholder="https://maps.app.goo.gl/...">
+          <label>Link de Google Maps:</label>
+          <input type="url" id="cfgMapsUrl" value="https://maps.app.goo.gl/Xb3xjy4f4ADwYHi49?g_st=ic">
+        </div>
+        <div class="form-group">
+          <label>Link de Playlist de Spotify:</label>
+          <input type="url" id="cfgSpotifyUrl" placeholder="https://open.spotify.com/playlist/...">
+          <small class="form-hint">Pegá el link de tu playlist de Spotify colaborativa acá.</small>
         </div>
         <div class="form-group">
           <label>Número de WhatsApp para recibir confirmaciones:</label>
-          <input type="tel" id="cfgWhatsapp" placeholder="Ej: 5491112345678 (con código de país sin +)">
-          <small class="form-hint">Si lo dejás vacío, se abrirá WhatsApp para que el invitado elija tu contacto.</small>
+          <input type="tel" id="cfgWhatsapp" placeholder="Ej: 59899123456 (Uruguay sin +)">
+          <small class="form-hint">Si lo dejás vacío, el invitado elegirá tu contacto en WhatsApp.</small>
         </div>
         <div class="form-group">
           <label>Dress Code:</label>
@@ -318,11 +359,16 @@
   <!-- CELEBRATION POPUP AFTER CLICKING "SÍ" -->
   <div id="celebrationOverlay" class="celebration-overlay">
     <div class="celebration-card">
-      <div class="celeb-emoji">🍾💥🔥</div>
+      <div class="celeb-sticker-preview">
+        <div class="sticker-badge happy-sticker-in-modal">
+          <span class="sticker-face">😎🎉</span>
+          <span class="sticker-text">¡VAMOOOO!</span>
+        </div>
+      </div>
       <h2 class="celeb-title">¡SABÍA QUE NO IBAS A FALLAR!</h2>
-      <p class="celeb-sub">Te ganaste tu Pase VIP para los 18 de Esequiel.</p>
+      <p class="celeb-sub">Tu Pase VIP para los 18 de Esequiel en Montevideo está desbloqueado.</p>
       <div class="celeb-action">
-        <button id="btnProceedToDetails" class="btn-celeb-continue">VER MI PASE VIP 🎟️</button>
+        <button id="btnProceedToDetails" class="btn-celeb-continue">VER MI PASE VIP Y UBICACIÓN 🎟️</button>
       </div>
     </div>
   </div>

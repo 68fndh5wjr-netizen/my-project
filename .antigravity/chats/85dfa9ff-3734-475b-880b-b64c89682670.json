@@ -88,6 +88,18 @@
       "created_at": "2026-11-02T20:35:06.840Z",
       "sender": "ios",
       "is_cancelled": false
+    },
+    {
+      "id": "7d47c792-712a-4461-8292-4d3a861e29ec",
+      "role": "agent",
+      "content": "¡Quedó tremendo! Ya tenés la nueva versión con la intro estilo TikTok, la música de **Right Round** y los stickers con las fotos reales de Esequiel:\n\n👉 **[Ver Invitación Web Actualizada](https://antigravity.luch.dev/site/43434aaf-b9f7-4721-b4f2-cbafc91f3098/13f2d8a5ae714fb9922ceb0f/)**\n\n---\n\n### ¿Qué agregamos en esta versión?\n\n1. **Intro interactiva estilo TikTok (fotos 3 y 4)**:\n   - Al entrar a la web, aparece la pantalla de inicio con el botón **\"TOCÁ PARA ENTRAR 🔊\"**.\n   - Al tocarlo, arranca a sonar **Right Round** y los fondos intercalan colores al ritmo del tema:\n     - 🔴 **Fondo Rojo**: **HOLA** (exacto a la foto 3)\n     - ⚫ **Fondo Negro**: **CUMPLO 18 AÑOS** (exacto a la foto 4)\n     - 🔴 **Fondo Rojo**: **¿VENÍS?**\n     - ⚫ **Fondo Negro**: **ENTONCES...** con la foto de Esequiel chico\n     - 💥 Explota el confeti y entra a la invitación con la música sonando de fondo.\n   - En la barra de arriba sumamos el botón **🎬 INTRO** por si quieren volver a ver la animación en cualquier momento.\n\n2. **Canción oficial**:\n   - Suena el temazo **Right Round** de Flo Rida de fondo en toda la experiencia, con botón en la barra superior para pausar/reanudar.\n\n3. **Stickers con las caras reales de Esequiel (fotos 1 y 2)**:\n   - **Sticker Enojado (`¡¿QUÉ ME TOCÁS?! 😡`)**: usa la foto de Esequiel chico enojado/haciendo puchero. Salta en la pantalla cada vez que intentan tocar el botón **\"NO\"** o si tocan la foto de portada.\n   - **Sticker Contento (`¡VAMOOOO! 👅🎉`)**: usa la foto de Esequiel chico sacando la lengua y sonriendo. Explota en pantalla cuando tocan **\"SÍ\"** y al enviar la confirmación.\n\n4. **Ubicación & Spotify**:\n   - Salón en **María Orticochea 4183, Montevideo** con acceso directo a Google Maps.\n   - Sección de Spotify colaborativa con lista de temas pedidos para el DJ.\n   - Sin el campo de bebidas.",
+      "status": "completed",
+      "model": "gemini-3.8-flash-high",
+      "client_type": "gemini-bridge",
+      "parent_message_id": "e1425411-3afc-4507-ad46-fa50e9133c34",
+      "created_at": "2026-11-02T20:40:25.364Z",
+      "sender": "macOS",
+      "is_cancelled": false
     }
   ]
 }
